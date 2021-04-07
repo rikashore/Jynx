@@ -4,6 +4,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Extensions;
+using Jynx.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -11,15 +12,27 @@ using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Jynx
 {
     class Program
     {
+        static void WriteJynxInfo(Configuration configuration)
+        {
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.OutputEncoding = new UTF8Encoding();
+            Console.WriteLine(JynxCosmetics.JynxAscii);
+            Console.WriteLine($"\nVersion: {configuration.Version}\nAuthor: Aarav Navani");
+            Console.ForegroundColor = default;
+        }
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var jynx = new Jynx();
+            WriteJynxInfo(jynx.Configuration);
+            jynx.RunAsync().GetAwaiter().GetResult();
         }
     }
 
@@ -32,7 +45,7 @@ namespace Jynx
         public ServiceCollection Services { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
 
-        public Configuration configuration { get; private set; } = new Configuration();
+        public Configuration Configuration { get; private set; } = new Configuration();
 
         public async Task RunAsync()
         {
@@ -44,7 +57,7 @@ namespace Jynx
             var logFactory = new LoggerFactory().AddSerilog();
             var config = new DiscordConfiguration
             {
-                Token = configuration.Token,
+                Token = Configuration.Token,
                 TokenType = TokenType.Bot,
                 AutoReconnect = true,
                 MinimumLogLevel = LogLevel.Debug,
@@ -65,13 +78,13 @@ namespace Jynx
             var services = new ServiceCollection()
                 .AddSingleton(this)
                 .AddSingleton<HttpClient>()
-                .AddSingleton(configuration)
+                .AddSingleton(Configuration)
                 .BuildServiceProvider();
 
 
             var commandsConfig = new CommandsNextConfiguration
             {
-                StringPrefixes = new string[] { configuration.Prefix },
+                StringPrefixes = new string[] { Configuration.Prefix },
                 EnableMentionPrefix = true,
                 EnableDms = false,
                 Services = services
@@ -93,7 +106,7 @@ namespace Jynx
         {
             _ = Task.Run(async () =>
             {
-                string[] words = { "disaris", "i", "need", "help" };
+                string[] words = { "jynx", "i", "need", "help" };
                 string[] negation = { "dont", "do not", "dont" };
                 var msg = e.Message.Content.ToLower();
 
@@ -116,7 +129,7 @@ namespace Jynx
 
         private Task OnClientReady(DiscordClient sender, ReadyEventArgs e)
         {
-            var activity = new DiscordActivity("ds help", ActivityType.Playing);
+            var activity = new DiscordActivity("jx help", ActivityType.Playing);
             Client.UpdateStatusAsync(activity);
 
             return Task.CompletedTask;
