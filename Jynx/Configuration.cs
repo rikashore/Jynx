@@ -13,6 +13,7 @@ namespace Jynx
     {
         private string _prefix = null!;
         private string _token = null!;
+        private string _version = null!;
 
         private readonly string _configurationPath = Path.Combine(Environment.CurrentDirectory, "config.json");
 
@@ -40,6 +41,16 @@ namespace Jynx
             }
         }
 
+        public string Version
+        {
+            get => _version;
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new NullReferenceException($"Token must be defined in {_configurationPath}");
+            }
+        }
+
         public string ApiTrackerKey { get; set; }
 
         public Configuration()
@@ -58,6 +69,7 @@ namespace Jynx
 
             Prefix = config.GetValue<string>(nameof(Prefix));
             Token = config.GetValue<string>(nameof(Token));
+            Version = config.GetValue<string>(nameof(Version));
             ApiTrackerKey = config.GetValue<string>(nameof(ApiTrackerKey));
         }
     }
