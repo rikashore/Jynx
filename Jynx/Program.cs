@@ -42,7 +42,6 @@ namespace Jynx
         public readonly EventId BotEventId = new EventId(11, "Disaris");
         public DiscordClient Client { get; private set; }
         public int latency => Client.Ping;
-        public string avatar => Client.CurrentUser.AvatarUrl;
         public InteractivityExtension Interactivity { get; private set; }
         public ServiceCollection Services { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
@@ -117,7 +116,7 @@ namespace Jynx
 
                 if (words.All(x => msg.Contains(x.ToLower())) && !negation.Any(msg.Contains))
                 {
-                    var helpContext = Commands.CreateFakeContext(sender.CurrentUser, e.Channel, e.Message.Content, "ds ", Commands.RegisteredCommands["help"]);
+                    var helpContext = Commands.CreateFakeContext(sender.CurrentUser, e.Channel, e.Message.Content, "jx", Commands.RegisteredCommands["help"]);
                     await Commands.ExecuteCommandAsync(helpContext);
                 }
             });
