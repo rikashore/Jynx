@@ -11,21 +11,21 @@ namespace Jynx
 {
     public class Configuration
     {
-        private string _prefix = null!;
+        private string[] _prefixes = null!;
         private string _token = null!;
         private string _version = null!;
 
         private readonly string _configurationPath = Path.Combine(Environment.CurrentDirectory, "config.json");
 
-        public string Prefix
+        public string[] Prefixes
         {
-            get => _prefix;
+            get => _prefixes;
             set
             {
-                if (string.IsNullOrEmpty(value))
-                    throw new NullReferenceException($"Prefix must be defined in {_configurationPath}");
+                if (value == null)
+                    throw new NullReferenceException($"Prefixes must be defined in {_configurationPath}");
 
-                _prefix = value;
+                _prefixes = value;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Jynx
                 .AddJsonFile(_configurationPath)
                 .Build();
 
-            Prefix = config.GetValue<string>(nameof(Prefix));
+            Prefixes = config.GetSection(nameof(Prefixes)).Get<string[]>();
             Token = config.GetValue<string>(nameof(Token));
             Version = config.GetValue<string>(nameof(Version));
             ApiTrackerKey = config.GetValue<string>(nameof(ApiTrackerKey));

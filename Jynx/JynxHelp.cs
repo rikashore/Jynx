@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.CommandsNext.Entities;
 using DSharpPlus.Entities;
+using Jynx.Attributes;
 using Jynx.Common;
 using System;
 using System.Collections.Generic;
@@ -28,12 +29,11 @@ namespace Jynx
         public override BaseHelpFormatter WithCommand(Command command)
         {
             WithCommandCalled = true;
-            if (command is CommandGroup)
+            if (command is CommandGroup group)
             {
                 this.MessageBuilder.WithTitle(command.Name);
-                var cmd = (CommandGroup)command;
-                this.MessageBuilder.AddField("Description", cmd.Description ?? "none");
-                this.MessageBuilder.AddField("Commands", $"> {string.Join("\n> ", cmd.Children.Select(x => x.Name))}");
+                this.MessageBuilder.AddField("Description", group.Description ?? "none");
+                this.MessageBuilder.AddField("Commands", $"> {string.Join("\n> ", group.Children.Select(x => x.Name))}");
             }
             else
             {
@@ -45,8 +45,16 @@ namespace Jynx
                 }
 
                 this.MessageBuilder.WithTitle(command.Name);
+                this.MessageBuilder.AddField("Command Group", command.Parent == null ? "Not part of a command group" : command.Parent.Name);
                 this.MessageBuilder.AddField("Description", command.Description ?? "none");
                 this.MessageBuilder.AddField("Aliases", aliases);
+
+                var usage = (UsageAttribute)command.CustomAttributes.SingleOrDefault(x => x is UsageAttribute);
+
+                if (usage == null)
+                    this.MessageBuilder.AddField("Usage", "none");
+                else
+                    this.MessageBuilder.AddField("Usage", usage.Usage);
             }
 
             return this;
@@ -61,7 +69,7 @@ namespace Jynx
             else
             {
                 this.MessageBuilder.AddField("Commands and Command Groups", $"> {string.Join("\n> ", subcommands.Select(xc => xc.Name))}")
-                    .WithDescription("Type `ds help [commandname/commandgroup]` to get more info on a particular command or command group");
+                    .WithDescription($"Type `'jx '/jx help [commandname/commandgroup]` to get more info on a particular command or command group");
                 return this;
             }
 
