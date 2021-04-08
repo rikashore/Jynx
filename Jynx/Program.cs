@@ -13,6 +13,7 @@ using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,6 +43,7 @@ namespace Jynx
         public readonly EventId BotEventId = new EventId(11, "Disaris");
         public DiscordClient Client { get; private set; }
         public int latency => Client.Ping;
+        public string avatar => Client.CurrentUser.AvatarUrl;
         public InteractivityExtension Interactivity { get; private set; }
         public ServiceCollection Services { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
@@ -95,8 +97,7 @@ namespace Jynx
 
             Commands.SetHelpFormatter<JynxHelp>();
 
-            Commands.RegisterCommands<GeneralModule>();
-            Commands.RegisterCommands<EvalModule>();
+            Commands.RegisterCommands(Assembly.GetExecutingAssembly());
 
             Commands.CommandErrored += OnError;
 
