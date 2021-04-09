@@ -26,7 +26,7 @@ namespace Jynx.Modules
                 return;
             }
 
-            var cs = await code.ParseCodeBlock(ctx);
+            var cs = await code.ParseCodeBlock(ctx, ParseType.Default);
 
             if (cs == null)
                 return;
