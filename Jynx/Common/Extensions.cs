@@ -9,7 +9,7 @@ namespace Jynx.Common
 {
     public static class Extensions
     {
-        public static async Task<string> ParseCodeBlock(this string s, CommandContext ctx)
+        public static async Task<string> ParseCodeBlock(this string s, CommandContext ctx, ParseType parseType)
         {
             if (s == null)
             {
@@ -17,7 +17,16 @@ namespace Jynx.Common
                 return null;
             }
 
-            var cs1 = s.IndexOf("```lua") + 3;
+            var parser = parseType switch
+            {
+                ParseType.Lua => "lua",
+                ParseType.Cs => "cs",
+                _ => ""
+            };
+
+
+            // TODO: Need to make changes to parse system
+            var cs1 = s.IndexOf($"```{parser}") + 3;
             cs1 = s.IndexOf('\n', cs1) + 1;
             var cs2 = s.LastIndexOf("```");
 
@@ -31,5 +40,12 @@ namespace Jynx.Common
 
             return cs;
         }
+    }
+
+    public enum ParseType
+    {
+        Lua,
+        Cs,
+        Default
     }
 }
