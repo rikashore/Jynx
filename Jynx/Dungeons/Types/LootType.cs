@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Jynx.Dungeons.Types
 {
-    public interface IDungeonRoom
+    public enum LootType
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        HealthPotion, Gold
     }
 }
