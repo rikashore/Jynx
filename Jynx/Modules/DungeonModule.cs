@@ -1,6 +1,7 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using Jynx.Dungeons;
 using Jynx.Dungeons.Types;
 using Jynx.Dungeons.Utilities;
 using System;
@@ -19,14 +20,9 @@ namespace Jynx.Modules
         [Description("begin a dungeon run")]
         public async Task Dungeon(CommandContext ctx)
         {
-            var name = DungeonConstants.GetEnemy();
+            var dungeonHandler = new DungeonHandler();
 
-            (string name, string description) details = DungeonConstants.GetEnemyDetails(name);
-
-            var enemyEmbed = new DiscordEmbedBuilder()
-                .WithTitle($"{details.name}, {details.description}");
-
-            await ctx.RespondAsync(enemyEmbed);
+            await dungeonHandler.ProcessDungeon(ctx);
         }
     }
 }
