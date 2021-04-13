@@ -13,14 +13,24 @@ namespace Jynx.Dungeons.Utilities
 
         public static string[] Enemies { get { return enemies; } }
 
+        public static string[] Rooms { get { return rooms; } }
+
         public static Dictionary<string, DungeonEnemy> DungeonEnemies
         {
             get { return dungeonenemies; }
         }
 
-        public static string[] enemies = new string[] { "skeleton", "zombie", "assassin", "warrior" };
+        public static List<string> RoomDescriptions { get { return roomDescriptions; } }
 
-        public static Dictionary<string, DungeonEnemy> dungeonenemies = new Dictionary<string, DungeonEnemy>
+        public const int MaxDamage = 30;
+        public const int MaxHealth = 100;
+        public const int HealAmount = 30;
+
+        private static string[] enemies = new string[] { "skeleton", "zombie", "assassin", "warrior" };
+
+        private static string[] rooms = new string[] { "enemy", "loot" };
+
+        private static Dictionary<string, DungeonEnemy> dungeonenemies = new Dictionary<string, DungeonEnemy>
         {
             {
                 "skeleton", new DungeonEnemy
@@ -76,19 +86,13 @@ namespace Jynx.Dungeons.Utilities
             }
         };
 
-        public static (string, string) GetEnemyDetails(string descriptionFor)
+        private static List<string> roomDescriptions = new List<string>
         {
-            var enemy = DungeonEnemies[descriptionFor];
-            var name = enemy.Names[rand.Next(enemy.Names.Count)];
-            var description = enemy.Descriptions[rand.Next(enemy.Descriptions.Count)];
-
-            return (name, description);
-        }
-
-        public static string GetEnemy()
-        {
-            var index = rand.Next(Enemies.Length);
-            return Enemies[index];
-        }
+            "A cave room with spires from the ceiling",
+            "A dark room with cobwebs",
+            "A mossy tunnel",
+            "A stone carved tunnel",
+            "A room of a ancient drawings"
+        };
     }
 }
