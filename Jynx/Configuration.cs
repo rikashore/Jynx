@@ -57,6 +57,8 @@ namespace Jynx
             {
                 if (string.IsNullOrEmpty(value))
                     throw new NullReferenceException($"Token must be defined in {_configurationPath}");
+
+                _version = value;
             }
         }
 
