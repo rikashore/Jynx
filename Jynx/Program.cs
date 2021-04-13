@@ -100,7 +100,7 @@ namespace Jynx
 
             Commands.CommandErrored += OnError;
 
-            Client.Logger.LogInformation("Running version {version}", new Configuration().Version);
+            Client.Logger.LogInformation("Running version {version}", Configuration.Version);
 
             await Client.ConnectAsync();
 
