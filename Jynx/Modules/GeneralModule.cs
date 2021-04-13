@@ -5,6 +5,7 @@ using Jynx.Attributes;
 using Jynx.Common;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,8 +42,8 @@ namespace Jynx.Modules
                 .WithThumbnail(jynx.avatar)
                 .WithFooter("Made by shift-eleven#7304")
                 .WithColor(JynxCosmetics.JynxColor)
-                .AddField("Version", configuration.Version)
-                .AddField("Prefixes", string.Join(",", configuration.Prefixes))
+                .AddField("Version", configuration.Version, true)
+                .AddField("Prefixes", string.Join(",", configuration.Prefixes.Select(x => Formatter.InlineCode(x))), true)
                 .AddField("Github", "[Jynx](https://github.com/shift-eleven/Jynx)")
                 .Build();
 
