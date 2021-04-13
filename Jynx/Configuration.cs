@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Emzi0767.Utilities;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,14 @@ using System.Threading.Tasks;
 
 namespace Jynx
 {
+    public class Config
+    {
+        public string Token { get; set; }
+        public List<string> Prefixes { get; set; }
+        public string Version { get; set; }
+        public string ApiTrackerKey { get; set; }
+    }
+
     public class Configuration
     {
         private string[] _prefixes = null!;
@@ -48,6 +57,8 @@ namespace Jynx
             {
                 if (string.IsNullOrEmpty(value))
                     throw new NullReferenceException($"Token must be defined in {_configurationPath}");
+
+                _version = value;
             }
         }
 
@@ -68,6 +79,7 @@ namespace Jynx
                 .Build();
 
             Prefixes = config.GetSection(nameof(Prefixes)).Get<string[]>();
+
             Token = config.GetValue<string>(nameof(Token));
             Version = config.GetValue<string>(nameof(Version));
             ApiTrackerKey = config.GetValue<string>(nameof(ApiTrackerKey));

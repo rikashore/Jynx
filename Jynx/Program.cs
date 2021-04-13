@@ -21,19 +21,18 @@ namespace Jynx
 {
     class Program
     {
-        static void WriteJynxInfo(Configuration configuration)
+        static void WriteJynxInfo()
         {
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.OutputEncoding = new UTF8Encoding();
             Console.WriteLine(JynxCosmetics.JynxAscii);
-            Console.WriteLine($"\nVersion: {configuration.Version}\nAuthor: Aarav Navani");
             Console.ForegroundColor = default;
         }
 
         static void Main(string[] args)
         {
             var jynx = new Jynx();
-            WriteJynxInfo(jynx.Configuration);
+            WriteJynxInfo();
             jynx.RunAsync().GetAwaiter().GetResult();
         }
     }
@@ -100,6 +99,8 @@ namespace Jynx
             Commands.RegisterCommands(Assembly.GetExecutingAssembly());
 
             Commands.CommandErrored += OnError;
+
+            Client.Logger.LogInformation("Running version {version}", new Configuration().Version);
 
             await Client.ConnectAsync();
 
