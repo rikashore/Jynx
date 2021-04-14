@@ -5,7 +5,10 @@ using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Extensions;
 using Jynx.Common;
+using Jynx.Database;
+using Jynx.Database.Helpers;
 using Jynx.Modules;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -78,9 +81,13 @@ namespace Jynx
             });
 
             var services = new ServiceCollection()
+                .AddDbContext<JynxContext>(x => 
+                    x.UseMySql(Configuration.DbConnection, new MySqlServerVersion(new Version(8, 0 ,21))))
                 .AddSingleton(this)
                 .AddSingleton<HttpClient>()
                 .AddSingleton(Configuration)
+                .AddSingleton<TagHelper>()
+                .AddSingleton<UserHelper>()
                 .BuildServiceProvider();
 
 
