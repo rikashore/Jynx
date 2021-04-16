@@ -10,19 +10,12 @@ using System.Threading.Tasks;
 
 namespace Jynx
 {
-    public class Config
-    {
-        public string Token { get; set; }
-        public List<string> Prefixes { get; set; }
-        public string Version { get; set; }
-        public string ApiTrackerKey { get; set; }
-    }
-
     public class Configuration
     {
         private string[] _prefixes = null!;
         private string _token = null!;
         private string _version = null!;
+        private string _dbconnection = null!;
 
         private readonly string _configurationPath = Path.Combine(Environment.CurrentDirectory, "config.json");
 
@@ -56,9 +49,21 @@ namespace Jynx
             set
             {
                 if (string.IsNullOrEmpty(value))
-                    throw new NullReferenceException($"Token must be defined in {_configurationPath}");
+                    throw new NullReferenceException($"Version must be defined in {_configurationPath}");
 
                 _version = value;
+            }
+        }
+
+        public string DbConnection
+        {
+            get => _dbconnection;
+            set
+            {
+                if(string.IsNullOrEmpty(value))
+                    throw new NullReferenceException($"DB Connection must be defined in {_configurationPath}");
+
+                _dbconnection = value;
             }
         }
 
@@ -82,6 +87,7 @@ namespace Jynx
 
             Token = config.GetValue<string>(nameof(Token));
             Version = config.GetValue<string>(nameof(Version));
+            DbConnection = config.GetValue<string>(nameof(DbConnection));
             ApiTrackerKey = config.GetValue<string>(nameof(ApiTrackerKey));
         }
     }

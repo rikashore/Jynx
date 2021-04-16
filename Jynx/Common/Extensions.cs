@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Jynx.Common
@@ -26,9 +25,9 @@ namespace Jynx.Common
 
 
             // TODO: Need to make changes to parse system
-            var cs1 = s.IndexOf($"```{parser}") + 3;
+            var cs1 = s.IndexOf($"```{parser}", StringComparison.OrdinalIgnoreCase) + 3;
             cs1 = s.IndexOf('\n', cs1) + 1;
-            var cs2 = s.LastIndexOf("```");
+            var cs2 = s.LastIndexOf("```", StringComparison.OrdinalIgnoreCase);
 
             if (cs1 == -1 || cs2 == -1)
             {
