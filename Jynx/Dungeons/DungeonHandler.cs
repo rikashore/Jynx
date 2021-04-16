@@ -8,28 +8,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Jynx.Database.Helpers;
 
 namespace Jynx.Dungeons
 {
     public class DungeonHandler
     {
-        private readonly Random rnd = new();
+        public UserHelper userHelper { private get; set; }
+        private readonly Random _rnd = new();
+
+        public DungeonHandler(UserHelper userHelper)
+        {
+            this.userHelper = userHelper;
+        }
 
         public async Task ProcessDungeon(CommandContext ctx)
         {
             var interactivity = ctx.Client.GetInteractivity();
             int playerHealth = 100;
-            int healthPotions = 2;
+            int healthPotions = await userHelper.GetHealthPotions(ctx.Member.Id);
             bool ranAway = false;
 
             while (true)
             {
-                int enemyHealth = rnd.Next(DungeonConstants.MaxHealth);
+                int enemyHealth = _rnd.Next(DungeonConstants.MaxHealth);
                 var enemy = DungeonMethods.GetEnemy();
-                (string name, string description) details = DungeonMethods.GetEnemyDetails(enemy);
+                var (name, s) = DungeonMethods.GetEnemyDetails(enemy);
                 string description = DungeonMethods.GetRandomRoomDescription();
 
-                var message = DungeonMethods.BuildRoomMessage(description, details.name, details.description);
+                var message = DungeonMethods.BuildRoomMessage(description, name, s);
 
                 await ctx.Channel.SendMessageAsync(message);
 
@@ -48,7 +55,7 @@ namespace Jynx.Dungeons
                         enemyHealth -= damageDealt;
                         playerHealth -= damageTaken;
 
-                        await ctx.Channel.SendMessageAsync($"You strike {details.name} for {damageDealt} damage\nYou received {damageTaken} damage in retaliation");
+                        await ctx.Channel.SendMessageAsync($"You strike {name} for {damageDealt} damage\nYou received {damageTaken} damage in retaliation");
 
                         if(playerHealth < 1)
                         {
@@ -63,7 +70,7 @@ namespace Jynx.Dungeons
                             if(playerHealth < 70)
                             {
                                 playerHealth += DungeonConstants.HealAmount;
-                                healthPotions--;
+                                await userHelper.DecrementHealthPotions(ctx.Member.Id);
 
                                 await ctx.Channel.SendMessageAsync($"You heal yourself for {DungeonConstants.HealAmount}. Your current HP is {playerHealth}\nYou have {healthPotions} health potions left");
                             }
@@ -79,7 +86,7 @@ namespace Jynx.Dungeons
                     }
                     else if (choice == "3")
                     {
-                        await ctx.Channel.SendMessageAsync($"You ran away from {details.name}!");
+                        await ctx.Channel.SendMessageAsync($"You ran away from {name}!");
                         ranAway = true;
                         break;
                     }
@@ -99,15 +106,17 @@ namespace Jynx.Dungeons
                     break;
                 }
 
-                if (rnd.Next(1, 101) > 65)
+                if (_rnd.Next(1, 101) > 65)
                 {
-                    healthPotions++;
-                    await ctx.Channel.SendMessageAsync($"{details.name} dropped a health potion\nYou now have {healthPotions} left");
+                    await userHelper.IncrementHealthPotions(ctx.Member.Id);
+                    var currentHealthPots = await userHelper.GetHealthPotions(ctx.Member.Id);
+                    await ctx.Channel.SendMessageAsync($"{name} dropped a health potion\nYou now have {currentHealthPots} left");
                 }
                 else
                 {
                     int goldLoot = DungeonMethods.GetLootAmount();
-                    await ctx.Channel.SendMessageAsync($"{details.name} dropped {goldLoot} gold.");
+                    await userHelper.IncrementGold(ctx.Member.Id, goldLoot);
+                    await ctx.Channel.SendMessageAsync($"{name} dropped {goldLoot} gold.");
                 }
 
                 await ctx.Channel.SendMessageAsync("What would you like to do now?\n> 1. Continue\n> 2. Exit dungeon");
