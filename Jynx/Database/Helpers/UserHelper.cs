@@ -60,10 +60,32 @@ namespace Jynx.Database.Helpers
             var user = await JynxContext.Users
                 .FindAsync(id);
 
+            return user?.GoldAmount ?? 0;
+        }
+
+        public async Task DecrementHealthPotions(ulong id)
+        {
+            var user = await JynxContext.Users
+                .FindAsync(id);
+
+            user.HealthPotions--;
+
+            await JynxContext.SaveChangesAsync();
+        }
+
+        public async Task<int> DecrementGold(ulong id, int amount)
+        {
+            var user = await JynxContext.Users
+                .FindAsync(id);
+
             if (user == null)
                 return 0;
             else
-                return user.GoldAmount;
+                user.GoldAmount -= amount;
+
+            await JynxContext.SaveChangesAsync();
+
+            return 1;
         }
     }
 }
