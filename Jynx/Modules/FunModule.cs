@@ -24,9 +24,9 @@ namespace Jynx.Modules
                 return;
             }
 
-            string[] choices = text.Split('|');
+            var choices = text.Split('|');
 
-            if (choices.Length < 2 || choices == null)
+            if (choices.Length < 2)
             {
                 await ctx.RespondAsync("I need more choices");
                 return;
@@ -76,7 +76,7 @@ namespace Jynx.Modules
                     random.NextBytes(buffer);
 
                     var colorEmbed = new DiscordEmbedBuilder()
-                        .WithDescription(string.Join(" ", buffer))
+                        .WithDescription(string.Join(", ", buffer))
                         .WithColor(new DiscordColor(buffer[0], buffer[1], buffer[2]));
 
                     await ctx.RespondAsync(colorEmbed);
