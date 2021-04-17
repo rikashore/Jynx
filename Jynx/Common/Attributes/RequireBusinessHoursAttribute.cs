@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-namespace Jynx.Attributes
+namespace Jynx.Common.Attributes
 {
     [AttributeUsage(AttributeTargets.Method)]
     public class RequireBusinessHoursAttribute : CheckBaseAttribute
@@ -14,7 +14,7 @@ namespace Jynx.Attributes
         
         public override Task<bool> ExecuteCheckAsync(CommandContext ctx, bool help)
         {
-            return Task.FromResult(Now.Hour > _startingWorkHour.Hour && Now.Hour < _endingWorkHour.Hour);
+            return Task.FromResult(Now > _startingWorkHour && Now < _endingWorkHour);
         }
     }
 }
