@@ -10,7 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Jynx.Attributes;
+using Jynx.Common.Attributes;
 
 namespace Jynx.Modules
 {

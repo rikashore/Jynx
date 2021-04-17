@@ -9,8 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Jynx.Attributes;
 using Jynx.Common;
+using Jynx.Common.Attributes;
 using Jynx.Database.Helpers;
 
 namespace Jynx.Modules

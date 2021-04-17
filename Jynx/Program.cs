@@ -20,7 +20,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus.CommandsNext.Exceptions;
-using Jynx.Attributes;
+using Jynx.Common.Attributes;
 
 namespace Jynx
 {
@@ -143,7 +143,7 @@ namespace Jynx
             foreach (var failedCheck in failedChecks)
             {
                 if (failedCheck is RequireBusinessHoursAttribute)
-                    await e.Context.RespondAsync("Only usable between 9 AM and 8 PM");
+                    await e.Context.RespondAsync($"Shops closed {e.Context.Member.Username}, come again between 9 AM and 8 PM");
             }
         }
 

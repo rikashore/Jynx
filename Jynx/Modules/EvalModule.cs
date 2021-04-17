@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using MoonSharp.Interpreter;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using Jynx.Attributes;
 using Jynx.Common;
+using Jynx.Common.Attributes;
 
 namespace Jynx.Modules
 {
