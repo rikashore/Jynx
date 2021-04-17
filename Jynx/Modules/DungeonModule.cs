@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Jynx.Common;
 using Jynx.Database.Helpers;
 
 namespace Jynx.Modules
@@ -26,12 +27,38 @@ namespace Jynx.Modules
             await dungeonHandler.ProcessDungeon(ctx);
         }
 
-        [Command("gold")]
-        [Description("get you current gold")]
+        [Command("dinfo")]
+        [Description("get you current dungeon info")]
         public async Task Gold(CommandContext ctx)
         {
+            await ctx.Channel.TriggerTypingAsync();
+            
             var goldAmount = await userHelper.GetGold(ctx.Member.Id);
-            await ctx.RespondAsync($"You currently have {goldAmount} gold pieces");
+            var healthPotions = await userHelper.GetHealthPotions(ctx.Member.Id);
+            var dungeonInfoEmbed = new DiscordEmbedBuilder()
+                .WithTitle($"Info for {ctx.Member.Username}")
+                .WithColor(JynxCosmetics.JynxColor)
+                .WithThumbnail(ctx.Member.AvatarUrl)
+                .AddField("Gold", $"{goldAmount}", true)
+                .AddField("Health Potions", $"{healthPotions}", true);
+
+            await ctx.RespondAsync(dungeonInfoEmbed);
+        }
+
+        [Command("buy")]
+        [Description("Buy health potions")]
+        public async Task Buy(CommandContext ctx, int amount = 1)
+        {
+            var price = 100;
+            var goldAmount = await userHelper.GetGold(ctx.Member.Id);
+            if (goldAmount < price*amount)
+            {
+                await ctx.RespondAsync($"You do not have enough gold to buy {amount} health potions, you can buy less or fight in the dungeon for more gold");
+                return;
+            }
+
+            await userHelper.IncrementHealthPotions(ctx.Member.Id, amount);
+            await userHelper.DecrementGold(ctx.Member.Id, price * amount);
         }
     }
 }
