@@ -9,28 +9,13 @@ namespace Jynx.Dungeons.Utilities
 {
     public static class DungeonConstants
     {
-        private static readonly Random rand = new Random();
-
-        public static string[] Enemies { get { return enemies; } }
-
-        public static string[] Rooms { get { return rooms; } }
-
-        public static Dictionary<string, DungeonEnemy> DungeonEnemies
-        {
-            get { return dungeonenemies; }
-        }
-
-        public static List<string> RoomDescriptions { get { return roomDescriptions; } }
-
         public const int MaxDamage = 30;
         public const int MaxHealth = 100;
         public const int HealAmount = 30;
 
-        private static string[] enemies = new string[] { "skeleton", "zombie", "assassin", "warrior" };
+        public static readonly string[] Enemies = { "skeleton", "zombie", "assassin", "warrior" };
 
-        private static string[] rooms = new string[] { "enemy", "loot" };
-
-        private static Dictionary<string, DungeonEnemy> dungeonenemies = new Dictionary<string, DungeonEnemy>
+        public static readonly Dictionary<string, DungeonEnemy> DungeonEnemies = new()
         {
             {
                 "skeleton", new DungeonEnemy
@@ -86,7 +71,7 @@ namespace Jynx.Dungeons.Utilities
             }
         };
 
-        private static List<string> roomDescriptions = new List<string>
+        public static readonly List<string> RoomDescriptions = new()
         {
             "A cave room with spires from the ceiling",
             "A dark room with cobwebs",

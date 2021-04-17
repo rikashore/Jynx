@@ -9,13 +9,13 @@ namespace Jynx.Dungeons.Utilities
 {
     public static class DungeonMethods
     {
-        private static readonly Random rand = new Random();
+        private static readonly Random Rand = new Random();
 
         public static (string, string) GetEnemyDetails(string descriptionFor)
         {
             var enemy = DungeonConstants.DungeonEnemies[descriptionFor];
-            var name = enemy.Names[rand.Next(enemy.Names.Count)];
-            var description = enemy.Descriptions[rand.Next(enemy.Descriptions.Count)];
+            var name = enemy.Names[Rand.Next(enemy.Names.Count)];
+            var description = enemy.Descriptions[Rand.Next(enemy.Descriptions.Count)];
 
             return (name, description);
         }
@@ -23,20 +23,20 @@ namespace Jynx.Dungeons.Utilities
         public static string GetRandomRoomDescription()
         {
             var descriptions = DungeonConstants.RoomDescriptions;
-            var description = descriptions[rand.Next(DungeonConstants.RoomDescriptions.Count)];
+            var description = descriptions[Rand.Next(DungeonConstants.RoomDescriptions.Count)];
 
             return description;
         }
 
         public static string GetEnemy()
         {
-            var index = rand.Next(DungeonConstants.Enemies.Length);
+            var index = Rand.Next(DungeonConstants.Enemies.Length);
             return DungeonConstants.Enemies[index];
         }
 
         public static int GetDamage()
         {
-            return rand.Next(1, DungeonConstants.MaxDamage + 1);
+            return Rand.Next(1, DungeonConstants.MaxDamage + 1);
         }
 
         public static string BuildRoomMessage(string roomName, string roomDescription)
@@ -47,7 +47,7 @@ namespace Jynx.Dungeons.Utilities
 
         public static int GetLootAmount()
         {
-            int returnAmount = rand.Next(10, 37);
+            int returnAmount = Rand.Next(10, 37);
             return returnAmount;
         }
     }
