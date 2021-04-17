@@ -19,6 +19,8 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using DSharpPlus.CommandsNext.Exceptions;
+using Jynx.Attributes;
 
 namespace Jynx
 {
@@ -133,11 +135,16 @@ namespace Jynx
             return Task.CompletedTask;
         }
 
-        private Task OnError(CommandsNextExtension sender, CommandErrorEventArgs e)
+        private async Task OnError(CommandsNextExtension sender, CommandErrorEventArgs e)
         {
             e.Context.Client.Logger.LogError(BotEventId, $"{e.Context.User.Username} tried executing '{e.Command?.QualifiedName ?? "<unknown command>"}' but it errored: {e.Exception.GetType()}: {e.Exception.Message ?? "<no message>"}", DateTime.Now);
-
-            return Task.CompletedTask;
+            
+            var failedChecks = ((ChecksFailedException) e.Exception).FailedChecks;
+            foreach (var failedCheck in failedChecks)
+            {
+                if (failedCheck is RequireBusinessHoursAttribute)
+                    await e.Context.RespondAsync("Only usable between 9 AM and 8 PM");
+            }
         }
 
         private Task OnClientReady(DiscordClient sender, ReadyEventArgs e)
