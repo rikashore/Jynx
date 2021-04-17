@@ -50,7 +50,7 @@ namespace Jynx
         public ServiceCollection Services { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
 
-        public Configuration Configuration { get; private set; } = new Configuration();
+        public Configuration Configuration { get; private set; } = new();
 
         public async Task RunAsync()
         {
