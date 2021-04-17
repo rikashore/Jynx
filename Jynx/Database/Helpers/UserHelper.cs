@@ -26,6 +26,21 @@ namespace Jynx.Database.Helpers
             await JynxContext.SaveChangesAsync();
         }
 
+        public async Task IncrementHealthPotions(ulong id, int amount)
+        {
+            var user = await JynxContext.Users
+                .FindAsync(id);
+
+            if (user == null)
+            {
+                JynxContext.Add(new User {Id = id, HealthPotions = 2 + amount});
+            }
+            else
+                user.HealthPotions += amount;
+
+            await JynxContext.SaveChangesAsync();
+        }
+
         public async Task IncrementGold(ulong id, int amount)
         {
             var user = await JynxContext.Users
