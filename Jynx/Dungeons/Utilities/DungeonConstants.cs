@@ -12,6 +12,7 @@ namespace Jynx.Dungeons.Utilities
         public const int MaxDamage = 30;
         public const int MaxHealth = 100;
         public const int HealAmount = 30;
+        public const int Price = 100;
 
         public static readonly string[] Enemies = { "skeleton", "zombie", "assassin", "warrior" };
 
@@ -22,7 +23,8 @@ namespace Jynx.Dungeons.Utilities
                 {
                     Names = new List<string>
                     {
-                        "Bones", "Ribbs", "Creampuff"
+                        "Bones", "Ribbs", "Creampuff", "McRibs", "Sans", "Death Bridges", "Rot", "Kill Gates", "Sarumarrow", "Bona Lisa",
+                        "Scary Poppins", "Caius", "Crimson", "Daray", "Abel", "Dry Bones", "Casper", "Bonehead", "Skully", "Corbin"
                     },
                     Descriptions = new List<string>
                     {
@@ -35,11 +37,12 @@ namespace Jynx.Dungeons.Utilities
                 {
                     Names = new List<string>
                     {
-                        "Pack", "Porcupine", "Scuttler"
+                        "Pack", "Porcupine", "Scuttler", "Ticker", "Glazer","Screecher", "Camo", "Burner", "Tainted", "Spurter", 
+                        "Grunge", "Sponger", "Recollector", "Whistler", "Crusher", "Hacksaw", "Sloucher", "Lanky", "Hunter", "Driver"
                     },
                     Descriptions = new List<string>
                     {
-                        "A mass of flesh", "raggedly old janitor", "office worker"
+                        "mass of flesh", "raggedly old janitor", "office worker"
                     }
                 }
             },
@@ -48,7 +51,9 @@ namespace Jynx.Dungeons.Utilities
                 {
                     Names = new List<string>
                     {
-                        "Cerviel", "Ezio", "Xaphan"
+                        "Cerviel", "Ezio", "Xaphan", "Deadstain", "Redsaw", "Golden Mark", "Brass", "Dillema", "Padlock", "Dawn",
+                        "The Blue Shadow", "The Still Whisper", "Scarlet Eye", "Ghostshade", "The Nimble Rock",
+                        "The Steel Shade", "Rapid Phoenix", "Tranquil Child", "Sapphire Devil", "Ironsign"
                     },
                     Descriptions = new List<string>
                     {
@@ -61,11 +66,24 @@ namespace Jynx.Dungeons.Utilities
                 {
                     Names = new List<string>
                     {
-                        "Goldcrest", "Death Heart", "Ravenbane"
+                        "Goldcrest", "Death Heart", "Ravenbane", "Shepherd", "Wolfbrow", "Grand Mane", "Silverrage", "Behemoth", "Moltensword", "Ragehthorn",
+                        "Doomhair", "Rock Gaze", "Lightcrest", "Honorbound", "Hellscream", "Helleye", "Darktongue", "Lightchaser", "Fusesworn", "Sharpblood"
                     },
                     Descriptions = new List<string>
                     {
                         "soldier of a forgotten time", "fighter most fearsome", "strong-arm"
+                    }
+                }
+            },
+            {
+                "knight", new DungeonEnemy
+                {
+                    Names = new List<string>
+                    {
+                        "Water the whisper", "Mousse the protector", "Gabell the weak", "Barda the creature", "Dreu the amazing",
+                        "Jeremimum the undefeated", "Gylbarde the selfish", "Tim the silence", "Rankin the swift", "Jacobus the messenger",
+                        "Melisenda the silence", "Orella the giant", "Gynuara the angel", "Magdalene the cute", "Avis the amazing",
+                        "Iseut the divine", "Richardyne of the light", "Oriolda of the Spring", "Libet the horrific", "Ermyntrude the relentless"
                     }
                 }
             }
