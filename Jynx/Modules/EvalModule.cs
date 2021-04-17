@@ -18,7 +18,7 @@ namespace Jynx.Modules
         [Description("Eval some lua")]
         public async Task EvalLua(CommandContext ctx, [RemainingText] string code)
         {
-            var cs = await code.ParseCodeBlock(ctx, ParseType.Lua);
+            var cs = await code.ParseCodeBlock(ctx);
 
             if (cs == null)
                 return;
