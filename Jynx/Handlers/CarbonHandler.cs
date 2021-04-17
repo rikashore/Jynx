@@ -10,7 +10,7 @@ namespace Jynx.Handlers
 {
     public static class CarbonHandler
     {
-        public static Dictionary<string, string> themeDict = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> ThemeDict = new Dictionary<string, string>
         {
             {"draculapro", "dark" },
             {"vscode", "dark" },
@@ -45,19 +45,19 @@ namespace Jynx.Handlers
 
         public static string[] GetDarkThemes()
         {
-            var darkThemes = themeDict.Where(x => x.Value == "dark").Select(x => x.Key).ToArray();
+            var darkThemes = ThemeDict.Where(x => x.Value == "dark").Select(x => x.Key).ToArray();
             return darkThemes;
         }
 
         public static string[] GetLightThemes()
         {
-            var lightThemes = themeDict.Where(x => x.Value == "light").Select(x => x.Key).ToArray();
+            var lightThemes = ThemeDict.Where(x => x.Value == "light").Select(x => x.Key).ToArray();
             return lightThemes;
         }
 
         public static string[] GetThemes()
         {
-            Dictionary<string, string>.KeyCollection themes = themeDict.Keys;
+            var themes = ThemeDict.Keys;
             return themes.ToArray();
         }
 
@@ -78,8 +78,8 @@ namespace Jynx.Handlers
 
         public static string ThemeMatcher(string theme)
         {
-            string themeInput = theme.ToLower();
-            string validTheme = themeInput switch
+            var themeInput = theme.ToLower();
+            var validTheme = themeInput switch
             {
                 "draculapro" => "dracula-pro",
                 "vscode" => "vscode",
