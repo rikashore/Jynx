@@ -48,6 +48,7 @@ namespace Jynx.Modules
         [Command("rotation")]
         [Description("Check the current map rotation for Apex Legends")]
         [Aliases("map-rotation")]
+        [Usage("jxrotation")]
         public async Task MapRotation(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
