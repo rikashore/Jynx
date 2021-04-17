@@ -26,12 +26,12 @@ namespace Jynx.Modules
                 return;
             }
 
-            var cs = await code.ParseCodeBlock(ctx, ParseType.Default);
+            var cs = await code.ParseCodeBlock(ctx);
 
             if (cs == null)
                 return;
 
-            cs = cs.Remove(cs.LastIndexOf("\n"));
+            cs = cs.Remove(cs.LastIndexOf("\n", StringComparison.OrdinalIgnoreCase));
             var csUrl = WebUtility.UrlEncode(cs);
 
             string validTheme = CarbonHandler.ThemeMatcher(theme);
