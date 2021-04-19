@@ -15,8 +15,9 @@ namespace Jynx
     public class JynxHelp : BaseHelpFormatter
     {
         private DiscordEmbedBuilder MessageBuilder { get; }
-
-        private bool WithCommandCalled;
+        private readonly Configuration _configuration = new();
+        
+        private bool _withCommandCalled;
 
         public JynxHelp(CommandContext ctx) : base(ctx)
         {
@@ -28,7 +29,7 @@ namespace Jynx
 
         public override BaseHelpFormatter WithCommand(Command command)
         {
-            WithCommandCalled = true;
+            _withCommandCalled = true;
             if (command is CommandGroup group)
             {
                 this.MessageBuilder.WithTitle(command.Name);
@@ -62,14 +63,14 @@ namespace Jynx
 
         public override BaseHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
         {
-            if (WithCommandCalled)
+            if (_withCommandCalled)
             {
                 return this;
             }
             else
             {
                 this.MessageBuilder.AddField("Commands and Command Groups", $"> {string.Join("\n> ", subcommands.Select(xc => xc.Name))}")
-                    .WithDescription($"Type `'jx '/jx help [commandname/commandgroup]` to get more info on a particular command or command group");
+                    .WithDescription($"Type {string.Join('/', _configuration.Prefixes.Select(Formatter.InlineCode))} help [commandname/commandgroup] to get more info on a particular command or command group");
                 return this;
             }
 
