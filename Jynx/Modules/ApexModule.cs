@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Jynx.Common.Attributes;
+using Jynx.Services;
 
 namespace Jynx.Modules
 {
@@ -15,6 +16,7 @@ namespace Jynx.Modules
     {
         public Configuration _configuration { private get; set; }
         public HttpClient _httpclient { private get; set; }
+        public ApexService ApexService { private get; set; }
 
         [Command("stats")]
         [Description("Grab the stats of an Apex Legends player")]
@@ -35,8 +37,8 @@ namespace Jynx.Modules
                 return;
             }
 
-            var stats = ApexHandler.GetPlayerStats(result);
-            var embeds = ApexHandler.BuildStatEmbeds(stats);
+            var stats = ApexService.GetPlayerStats(result);
+            var embeds = ApexService.BuildStatEmbeds(stats);
 
             var statEmbed = embeds[0];
             var rankEmbed = embeds[1];
@@ -64,8 +66,8 @@ namespace Jynx.Modules
                 return;
             }
 
-            var rotation = ApexHandler.GetRotation(result);
-            var rotationEmbed = ApexHandler.BuildRotationEmbed(rotation);
+            var rotation = ApexService.GetRotation(result);
+            var rotationEmbed = ApexService.BuildRotationEmbed(rotation);
 
             await ctx.RespondAsync(rotationEmbed);
         }
