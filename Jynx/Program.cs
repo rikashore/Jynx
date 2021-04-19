@@ -44,14 +44,10 @@ namespace Jynx
 
     public class Jynx
     {
-        public readonly EventId BotEventId = new EventId(11, "Disaris");
-        public DiscordClient Client { get; private set; }
-        public int latency => Client.Ping;
+        public readonly EventId BotEventId = new EventId(11, "Jynx");
+        public DiscordShardedClient Client { get; private set; }
         public string avatar => Client.CurrentUser.AvatarUrl;
-        public InteractivityExtension Interactivity { get; private set; }
-        public ServiceCollection Services { get; private set; }
-        public CommandsNextExtension Commands { get; private set; }
-
+        public ServiceProvider Services { get; private set; }
         public Configuration Configuration { get; private set; } = new();
 
         public async Task RunAsync()
@@ -72,17 +68,9 @@ namespace Jynx
                 Intents = DiscordIntents.All
             };
 
-            Client = new DiscordClient(config);
+            Client = new DiscordShardedClient(config);
 
-            Client.Ready += OnClientReady;
-            Client.MessageCreated += OnMessage;
-
-            Client.UseInteractivity(new InteractivityConfiguration
-            {
-                Timeout = TimeSpan.FromMinutes(5)
-            });
-
-            var services = new ServiceCollection()
+            Services = new ServiceCollection()
                 .AddDbContext<JynxContext>(x => 
                     x.UseMySql(Configuration.DbConnection, new MySqlServerVersion(new Version(8, 0 ,21))))
                 .AddSingleton(this)
@@ -98,20 +86,32 @@ namespace Jynx
                 StringPrefixes = Configuration.Prefixes,
                 EnableMentionPrefix = true,
                 EnableDms = false,
-                Services = services
+                Services = Services
             };
 
-            Commands = Client.UseCommandsNext(commandsConfig);
-
-            Commands.SetHelpFormatter<JynxHelp>();
-
-            Commands.RegisterCommands(Assembly.GetExecutingAssembly());
-
-            Commands.CommandErrored += OnError;
-
+            var interactivityConfig = new InteractivityConfiguration
+            {
+                Timeout = TimeSpan.FromMinutes(5)
+            };
+            
+                        
             Client.Logger.LogInformation("Running version {version}", Configuration.Version);
 
-            await Client.ConnectAsync();
+             await Client.UseCommandsNextAsync(commandsConfig);
+             await Client.UseInteractivityAsync(interactivityConfig);
+
+            foreach (var client in Client.ShardClients)
+            {
+                client.Value.MessageCreated += OnMessage;
+                client.Value.Ready += OnClientReady;
+                
+                client.Value.GetCommandsNext().RegisterCommands(Assembly.GetExecutingAssembly());
+                client.Value.GetCommandsNext().SetHelpFormatter<JynxHelp>();
+
+                client.Value.GetCommandsNext().CommandErrored += OnError;
+            }
+            
+            await Client.StartAsync();
 
             await Task.Delay(-1);
 
@@ -122,13 +122,12 @@ namespace Jynx
             _ = Task.Run(async () =>
             {
                 string[] words = { "jynx", "i", "need", "help" };
-                string[] negation = { "dont", "do not", "dont" };
-                var msg = e.Message.Content.ToLower();
+                var msg = e.Message.Content.ToLowerInvariant();
 
-                if (words.All(x => msg.Contains(x.ToLower())) && !negation.Any(msg.Contains))
+                if (words.All(x => msg.Contains(x.ToLowerInvariant())))
                 {
-                    var helpContext = Commands.CreateFakeContext(sender.CurrentUser, e.Channel, e.Message.Content, "jx", Commands.RegisteredCommands["help"]);
-                    await Commands.ExecuteCommandAsync(helpContext);
+                    var helpContext = sender.GetCommandsNext().CreateFakeContext(sender.CurrentUser, e.Channel, e.Message.Content, "jx", sender.GetCommandsNext().RegisteredCommands["help"]);
+                    await sender.GetCommandsNext().ExecuteCommandAsync(helpContext);
                 }
             });
 
