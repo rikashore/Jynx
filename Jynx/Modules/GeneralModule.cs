@@ -24,8 +24,8 @@ namespace Jynx.Modules
         public async Task Ping(CommandContext ctx)
         {
             var pingEmbed = new DiscordEmbedBuilder()
-                .WithTitle("Pomg!")
-                .WithDescription($"Jynx's latency is `{jynx.latency}ms`")
+                .WithTitle("Pong!")
+                .WithDescription($"Jynx's latency is `{ctx.Client.Ping}ms`")
                 .WithColor(JynxCosmetics.JynxColor)
                 .Build();
 
