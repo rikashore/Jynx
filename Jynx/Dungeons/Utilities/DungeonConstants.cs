@@ -28,7 +28,10 @@ namespace Jynx.Dungeons.Utilities
                     },
                     Descriptions = new List<string>
                     {
-                        "A pile of bones", "A cream figure", "A lost human"
+                        "A pile of bones", "A cream figure", "A lost human", "grey skull", "organ-less walker",
+                        "empty husk", "white walker", "bone walker", "soul-less human", "soul-less husk",
+                        "the ribbed", "the puffy", "red bones", "dried whiteness", "captain of the bones",
+                        "thick skulled", "callous fingers", "the handless", "the legless", "the headless"
                     }
                 }
             },
@@ -42,7 +45,10 @@ namespace Jynx.Dungeons.Utilities
                     },
                     Descriptions = new List<string>
                     {
-                        "mass of flesh", "raggedly old janitor", "office worker"
+                        "mass of flesh", "raggedly old janitor", "office worker", "stubbed toe", "singed body",
+                        "knee-capped", "twisted knees", "mutilated arm", "eyeless", "gore-some",
+                        "grey eyed", "red eyed", "black eyed", "falling skin", "mud-caked",
+                        "clean haired", "nocturnal", "four digits", "no digits", "half skull"
                     }
                 }
             },
@@ -57,7 +63,10 @@ namespace Jynx.Dungeons.Utilities
                     },
                     Descriptions = new List<string>
                     {
-                        "master of the shadows", "A hidden one", "Master of disguise"
+                        "master of the shadows", "A hidden one", "master of disguise", "shadow warrior", "warrior of the night",
+                        "night bane", "moonlit skulker", "moonlit striker", "moonlit scythe", "silver blade",
+                        "torturous killer", "slow killer", "blade master", "silent walker", "moonwalker",
+                        "sun warrior", "hooded warrior", "cloaked scythe", "cloaked skulker", "masked warrior"
                     }
                 }
             },
@@ -71,7 +80,10 @@ namespace Jynx.Dungeons.Utilities
                     },
                     Descriptions = new List<string>
                     {
-                        "soldier of a forgotten time", "fighter most fearsome", "strong-arm"
+                        "soldier of a forgotten time", "fighter most fearsome", "strong-arm", "spider's bane", "terror of the day",
+                        "silver-haired warrior", "red-haired warrior", "tank", "thorn in the side", "sword of fire",
+                        "sword of ice", "bound to light", "bound to fire", "bound to earth", "blood of iron",
+                        "hard gaze", "soft gaze", "silver tongue", "hiss tongue", "animal herder"
                     }
                 }
             },
@@ -84,6 +96,13 @@ namespace Jynx.Dungeons.Utilities
                         "Jeremimum the undefeated", "Gylbarde the selfish", "Tim the silence", "Rankin the swift", "Jacobus the messenger",
                         "Melisenda the silence", "Orella the giant", "Gynuara the angel", "Magdalene the cute", "Avis the amazing",
                         "Iseut the divine", "Richardyne of the light", "Oriolda of the Spring", "Libet the horrific", "Ermyntrude the relentless"
+                    },
+                    Descriptions = new List<string>
+                    {
+                        "dragon slayer", "bane of dragons", "slayer of beasts", "champion of the olympics", "strongest person in the west",
+                        "divine being", "light walker", "devout worker", "angelic voice", "cutest person of the east",
+                        "warrior of the north", "warrior of the east", "fastest in the south", "terror-ful person", "big stomper",
+                        "selfish being", "darkness warrior", "messenger of the north", "messenger of the south", "silent warrior"
                     }
                 }
             }
