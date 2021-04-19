@@ -9,7 +9,7 @@ namespace Jynx.Dungeons.Utilities
 {
     public static class DungeonMethods
     {
-        private static readonly Random Rand = new Random();
+        private static readonly Random Rand = new();
 
         public static (string, string) GetEnemyDetails(string descriptionFor)
         {

@@ -1,17 +1,19 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using Jynx.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Jynx.Common.Attributes;
 
 namespace Jynx.Modules
 {
     public class FunModule : BaseCommandModule
     {
+        private static readonly Random Random = new();
+        
         [Command("choose")]
         [Description("chooses stuff")]
         [Aliases("choice")]
@@ -32,9 +34,7 @@ namespace Jynx.Modules
                 return;
             }
 
-            var rng = new Random();
-
-            var index = rng.Next(choices.Length);
+            var index = Random.Next(choices.Length);
 
             var choice = choices[index];
 
@@ -46,13 +46,13 @@ namespace Jynx.Modules
         {
             [Command("hex")]
             [Description("make a random color in hex format")]
+            [Usage("jxcolor hex [amount of colors]")]
             public async Task RandomColor(CommandContext ctx, int amount = 1)
             {
                 int i = 1;
                 while (i <= amount)
                 {
-                    var random = new Random();
-                    var color = string.Format("#{0:X6}", random.Next(0x1000000));
+                    var color = $"#{Random.Next(0x1000000):X6}";
 
                     var colorEmbed = new DiscordEmbedBuilder()
                         .WithDescription(color)
@@ -65,15 +65,14 @@ namespace Jynx.Modules
 
             [Command("rgb")]
             [Description("make a random color in rgb format")]
+            [Usage("jxcolor rgb [amount of colors]")]
             public async Task RandomRgbColor(CommandContext ctx, int amount = 1)
             {
-                int i = 1;
+                var i = 1;
                 while (i <= amount)
                 {
                     var buffer = new byte[3];
-
-                    var random = new Random();
-                    random.NextBytes(buffer);
+                    Random.NextBytes(buffer);
 
                     var colorEmbed = new DiscordEmbedBuilder()
                         .WithDescription(string.Join(", ", buffer))

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Jynx.Common.Attributes;
 
 namespace Jynx.Modules
 {
@@ -16,6 +17,7 @@ namespace Jynx.Modules
         public TagHelper Tags { private get; set; }
 
         [GroupCommand]
+        [Usage("jxtag [tag name]")]
         public async Task Tag(CommandContext ctx, [RemainingText] string name)
         {
             var tag = await Tags.GetTag(name);
@@ -30,6 +32,8 @@ namespace Jynx.Modules
         }
 
         [Command("add")]
+        [Description("Create a new tag")]
+        [Usage("jxtag add [tag name, use `\"tag name\"` for multi-word names] [tag content]")]
         public async Task TagAdd(CommandContext ctx, string tagName, [RemainingText] string tagContent)
         {
             var tag = await Tags.GetTag(tagName);
@@ -47,7 +51,8 @@ namespace Jynx.Modules
 
         [Command("del")]
         [Description("Delete a tag")]
-        public async Task TagDelete(CommandContext ctx, string tagName)
+        [Usage("jxtag del [tag name]")]
+        public async Task TagDelete(CommandContext ctx, [RemainingText] string tagName)
         {
             var tagResult = await Tags.DeleteTag(tagName);
 

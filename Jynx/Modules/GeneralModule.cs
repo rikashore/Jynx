@@ -1,7 +1,6 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using Jynx.Attributes;
 using Jynx.Common;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Jynx.Common.Attributes;
 
 namespace Jynx.Modules
 {
@@ -24,8 +24,8 @@ namespace Jynx.Modules
         public async Task Ping(CommandContext ctx)
         {
             var pingEmbed = new DiscordEmbedBuilder()
-                .WithTitle("Pomg!")
-                .WithDescription($"Jynx's latency is `{jynx.latency}ms`")
+                .WithTitle("Pong!")
+                .WithDescription($"Jynx's latency is `{ctx.Client.Ping}ms`")
                 .WithColor(JynxCosmetics.JynxColor)
                 .Build();
 

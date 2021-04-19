@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Jynx.Common;
+using Jynx.Common.Attributes;
 using Jynx.Database.Helpers;
 
 namespace Jynx.Modules
@@ -20,6 +21,7 @@ namespace Jynx.Modules
 
         [Command("dungeon")]
         [Description("begin a dungeon run")]
+        [Usage("jxdungeon")]
         public async Task Dungeon(CommandContext ctx)
         {
             var dungeonHandler = new DungeonHandler(userHelper);
@@ -29,6 +31,7 @@ namespace Jynx.Modules
 
         [Command("dinfo")]
         [Description("get you current dungeon info")]
+        [Usage("jxdinfo")]
         public async Task Gold(CommandContext ctx)
         {
             await ctx.Channel.TriggerTypingAsync();
@@ -47,9 +50,11 @@ namespace Jynx.Modules
 
         [Command("buy")]
         [Description("Buy health potions")]
+        [RequireBusinessHours]
+        [Usage("jxbuy [amount]")]
         public async Task Buy(CommandContext ctx, int amount = 1)
         {
-            var price = 100;
+            var price = DungeonConstants.Price;
             var goldAmount = await userHelper.GetGold(ctx.Member.Id);
             if (goldAmount < price*amount)
             {

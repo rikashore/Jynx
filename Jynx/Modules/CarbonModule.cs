@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Jynx.Common.Attributes;
 
 namespace Jynx.Modules
 {
@@ -18,6 +19,7 @@ namespace Jynx.Modules
         [Command("snippet")]
         [Description("Allows you to turn a code block into a code snippet")]
         [Aliases("cs")]
+        [Usage("jxsnippet [theme] [code block for snippet]")]
         public async Task CarbonCode(CommandContext ctx, string theme, [RemainingText] string code)
         {
             if (theme != null && code == null)
@@ -42,6 +44,7 @@ namespace Jynx.Modules
         [Command("themes")]
         [Description("Get a list of all the available themes")]
         [Aliases("snippet-themes")]
+        [Usage("jxthemes")]
         public async Task ListThemes(CommandContext ctx)
         {
             string[] lightThemes = CarbonHandler.GetLightThemes();
@@ -60,6 +63,7 @@ namespace Jynx.Modules
 
         [Command("theme")]
         [Description("individual theme images")]
+        [Usage("jxtheme [theme name]")]
         public async Task Theme(CommandContext ctx, string theme)
         {
             string[] themes = CarbonHandler.GetThemes();

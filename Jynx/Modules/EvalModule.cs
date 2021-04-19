@@ -8,6 +8,7 @@ using MoonSharp.Interpreter;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using Jynx.Common;
+using Jynx.Common.Attributes;
 
 namespace Jynx.Modules
 {
@@ -16,6 +17,7 @@ namespace Jynx.Modules
     {
         [Command("lua")]
         [Description("Eval some lua")]
+        [Usage("jxeval lua [code block for execution]")]
         public async Task EvalLua(CommandContext ctx, [RemainingText] string code)
         {
             var cs = await code.ParseCodeBlock(ctx);
@@ -70,7 +72,7 @@ namespace Jynx.Modules
                 else if(e is SyntaxErrorException syntaxException)
                 {
                     var errEmbed = new DiscordEmbedBuilder()
-                        .WithTitle($"An error occurred, Sytax Exception")
+                        .WithTitle($"An error occurred, Syntax Exception")
                         .WithDescription($"```lua\n{syntaxException.DecoratedMessage}\n```")
                         .WithColor(JynxCosmetics.JynxColor)
                         .Build();
