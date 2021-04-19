@@ -1,24 +1,22 @@
-﻿using DSharpPlus.Entities;
+﻿using System;
+using DSharpPlus.Entities;
 using Jynx.Common;
+using Jynx.Common.Attributes;
 using Jynx.Handlers.Deserialized;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Jynx.Handlers
+namespace Jynx.Services
 {
-    public static class ApexHandler
+    [JynxService]
+    public class ApexService
     {
-        public static Stats GetPlayerStats(string response)
+        public Stats GetPlayerStats(string response)
         {
             Stats playerStats = JsonConvert.DeserializeObject<Stats>(response);
             return playerStats;
         }
 
-        public static DiscordEmbed[] BuildStatEmbeds(Stats stats)
+        public DiscordEmbed[] BuildStatEmbeds(Stats stats)
         {
             var statEmbed = new DiscordEmbedBuilder()
                 .WithTitle($"Stats for {stats.global.name}")
@@ -51,13 +49,13 @@ namespace Jynx.Handlers
             return new DiscordEmbed[] { statEmbed, rankEmbed };
         }
 
-        public static Rotation GetRotation(string response)
+        public Rotation GetRotation(string response)
         {
             Rotation rotationInfo = JsonConvert.DeserializeObject<Rotation>(response);
             return rotationInfo;
         }
 
-        public static DiscordEmbed BuildRotationEmbed(Rotation rotation)
+        public DiscordEmbed BuildRotationEmbed(Rotation rotation)
         {
             var rotationEmbed = new DiscordEmbedBuilder()
                 .WithTitle("Map rotation for Apex Legends")

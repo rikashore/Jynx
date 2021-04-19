@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus.CommandsNext.Exceptions;
 using Jynx.Common.Attributes;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Jynx
 {
@@ -90,6 +91,7 @@ namespace Jynx
                 .AddSingleton(Configuration)
                 .AddSingleton<TagHelper>()
                 .AddSingleton<UserHelper>()
+                .AddJynxServices()
                 .BuildServiceProvider();
 
 

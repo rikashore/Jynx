@@ -1,15 +1,17 @@
-﻿using DSharpPlus.Entities;
-using Jynx.Common;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using DSharpPlus.Entities;
+using Jynx.Common;
+using Jynx.Common.Attributes;
+using Microsoft.Extensions.Logging;
 
-namespace Jynx.Handlers
+namespace Jynx.Services
 {
-    public static class CarbonHandler
+    [JynxService]
+    public class CarbonService
     {
+        
         private static readonly Dictionary<string, string> ThemeDict = new Dictionary<string, string>
         {
             {"draculapro", "dark" },
@@ -49,19 +51,19 @@ namespace Jynx.Handlers
             return darkThemes;
         }
 
-        public static string[] GetLightThemes()
+        public string[] GetLightThemes()
         {
             var lightThemes = ThemeDict.Where(x => x.Value == "light").Select(x => x.Key).ToArray();
             return lightThemes;
         }
 
-        public static string[] GetThemes()
+        public string[] GetThemes()
         {
             var themes = ThemeDict.Keys;
             return themes.ToArray();
         }
 
-        public static async Task<DiscordMessage> SendCarbonCodeAsync(this DiscordChannel channel, string username, string theme, string code)
+        public DiscordEmbed BuildCarbonEmbed(string username, string theme, string code)
         {
             var codeEmbed = new DiscordEmbedBuilder()
                 .WithTitle($"Code snippet by {username}")
@@ -71,12 +73,10 @@ namespace Jynx.Handlers
                 .WithColor(JynxCosmetics.JynxColor)
                 .Build();
 
-            var msg = await channel.SendMessageAsync(codeEmbed);
-
-            return msg;
+            return codeEmbed;
         }
 
-        public static string ThemeMatcher(string theme)
+        public string ThemeMatcher(string theme)
         {
             var themeInput = theme.ToLower();
             var validTheme = themeInput switch

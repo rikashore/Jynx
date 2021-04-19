@@ -11,11 +11,14 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Jynx.Common.Attributes;
+using Jynx.Services;
 
 namespace Jynx.Modules
 {
     public class CarbonModule : BaseCommandModule
     {
+        public CarbonService CarbonService { private get; set; }
+        
         [Command("snippet")]
         [Description("Allows you to turn a code block into a code snippet")]
         [Aliases("cs")]
@@ -36,9 +39,11 @@ namespace Jynx.Modules
             cs = cs.Remove(cs.LastIndexOf("\n", StringComparison.OrdinalIgnoreCase));
             var csUrl = WebUtility.UrlEncode(cs);
 
-            string validTheme = CarbonHandler.ThemeMatcher(theme);
+            string validTheme = CarbonService.ThemeMatcher(theme);
 
-            await ctx.Channel.SendCarbonCodeAsync(ctx.Member.Username, validTheme, csUrl);
+            var codeEmbed = CarbonService.BuildCarbonEmbed(ctx.Member.Username, validTheme, csUrl);
+
+            await ctx.Channel.SendMessageAsync(codeEmbed);
         }
 
         [Command("themes")]
@@ -47,8 +52,8 @@ namespace Jynx.Modules
         [Usage("jxthemes")]
         public async Task ListThemes(CommandContext ctx)
         {
-            string[] lightThemes = CarbonHandler.GetLightThemes();
-            string[] darkThemes = CarbonHandler.GetDarkThemes();
+            string[] lightThemes = CarbonService.GetLightThemes();
+            string[] darkThemes = CarbonService.GetDarkThemes();
 
             var themesEmbed = new DiscordEmbedBuilder()
                 .WithTitle("Available themes")
@@ -66,7 +71,7 @@ namespace Jynx.Modules
         [Usage("jxtheme [theme name]")]
         public async Task Theme(CommandContext ctx, string theme)
         {
-            string[] themes = CarbonHandler.GetThemes();
+            string[] themes = CarbonService.GetThemes();
 
             if (!Array.Exists(themes, x => x == theme))
             {
