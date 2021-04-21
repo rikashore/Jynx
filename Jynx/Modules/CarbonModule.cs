@@ -2,13 +2,9 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using Jynx.Common;
-using Jynx.Handlers;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Jynx.Common.Attributes;
 using Jynx.Services;
@@ -83,7 +79,7 @@ namespace Jynx.Modules
 
             string path = $"./Images/Snippets/{theme}-theme.png";
 
-            var msg = await new DiscordMessageBuilder()
+            await new DiscordMessageBuilder()
                 .WithContent($"Theme snippet for {theme}")
                 .WithFile(path, File.OpenRead(path))
                 .SendAsync(ctx.Channel);

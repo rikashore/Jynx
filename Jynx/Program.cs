@@ -7,7 +7,6 @@ using DSharpPlus.Interactivity.Extensions;
 using Jynx.Common;
 using Jynx.Database;
 using Jynx.Database.Helpers;
-using Jynx.Modules;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -21,7 +20,6 @@ using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus.CommandsNext.Exceptions;
 using Jynx.Common.Attributes;
-using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Jynx
 {
@@ -50,7 +48,7 @@ namespace Jynx
         public int latency => Client.Ping;
         public string avatar => Client.CurrentUser.AvatarUrl;
         public InteractivityExtension Interactivity { get; private set; }
-        public ServiceCollection Services { get; private set; }
+        public ServiceProvider Services { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
 
         public Configuration Configuration { get; private set; } = new();
@@ -78,12 +76,12 @@ namespace Jynx
             Client.Ready += OnClientReady;
             Client.MessageCreated += OnMessage;
 
-            Client.UseInteractivity(new InteractivityConfiguration
+            Interactivity = Client.UseInteractivity(new InteractivityConfiguration
             {
                 Timeout = TimeSpan.FromMinutes(5)
             });
 
-            var services = new ServiceCollection()
+            Services = new ServiceCollection()
                 .AddDbContext<JynxContext>(x => 
                     x.UseMySql(Configuration.DbConnection, new MySqlServerVersion(new Version(8, 0 ,21))))
                 .AddSingleton(this)
@@ -100,7 +98,7 @@ namespace Jynx
                 StringPrefixes = Configuration.Prefixes,
                 EnableMentionPrefix = true,
                 EnableDms = false,
-                Services = services
+                Services = Services
             };
 
             Commands = Client.UseCommandsNext(commandsConfig);

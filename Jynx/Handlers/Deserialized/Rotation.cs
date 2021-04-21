@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Jynx.Handlers.Deserialized
+﻿namespace Jynx.Handlers.Deserialized
 {
     public class Current
     {
         public int start { get; set; }
         public int end { get; set; }
-        public string readableDate_start { get; set; }
-        public string readableDate_end { get; set; }
+        public string ReadableDateStart { get; set; }
+        public string ReadableDateEnd { get; set; }
         public string map { get; set; }
         public int DurationInSecs { get; set; }
         public int DurationInMinutes { get; set; }
@@ -24,8 +18,8 @@ namespace Jynx.Handlers.Deserialized
     {
         public int start { get; set; }
         public int end { get; set; }
-        public string readableDate_start { get; set; }
-        public string readableDate_end { get; set; }
+        public string ReadableDateStart { get; set; }
+        public string ReadableDateEnd { get; set; }
         public string map { get; set; }
         public int DurationInSecs { get; set; }
         public int DurationInMinutes { get; set; }

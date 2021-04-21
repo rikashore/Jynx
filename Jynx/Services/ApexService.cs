@@ -46,7 +46,7 @@ namespace Jynx.Services
                 .AddField("Points", stats.global.rank.rankScore.ToString(), true)
                 .Build();
 
-            return new DiscordEmbed[] { statEmbed, rankEmbed };
+            return new[] { statEmbed, rankEmbed };
         }
 
         public Rotation GetRotation(string response)
@@ -62,10 +62,10 @@ namespace Jynx.Services
                 .WithColor(JynxCosmetics.JynxColor)
                 .WithTimestamp(DateTime.Now)
                 .AddField("Current Map", rotation.current.map)
-                .AddField("Started at", rotation.current.readableDate_start)
-                .AddField("Will end at", rotation.current.readableDate_end)
+                .AddField("Started at", rotation.current.ReadableDateStart)
+                .AddField("Will end at", rotation.current.ReadableDateEnd)
                 .AddField("Next Map", rotation.next.map)
-                .AddField("Starts at", rotation.next.readableDate_start)
+                .AddField("Starts at", rotation.next.ReadableDateStart)
                 .AddField("Duration", $"{rotation.next.DurationInMinutes} mins")
                 .Build();
 

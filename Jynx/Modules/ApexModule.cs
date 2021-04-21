@@ -1,11 +1,7 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using Jynx.Handlers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Jynx.Common.Attributes;
 using Jynx.Services;
@@ -14,8 +10,8 @@ namespace Jynx.Modules
 {
     public class ApexModule : BaseCommandModule
     {
-        public Configuration _configuration { private get; set; }
-        public HttpClient _httpclient { private get; set; }
+        public Configuration Configuration { private get; set; }
+        public HttpClient Httpclient { private get; set; }
         public ApexService ApexService { private get; set; }
 
         [Command("stats")]
@@ -29,7 +25,7 @@ namespace Jynx.Modules
             string result;
             try
             {
-                result = await _httpclient.GetStringAsync($"https://api.mozambiquehe.re/bridge?version=5&platform={platform}&player={username}&auth={_configuration.ApiTrackerKey}");
+                result = await Httpclient.GetStringAsync($"https://api.mozambiquehe.re/bridge?version=5&platform={platform}&player={username}&auth={Configuration.ApiTrackerKey}");
             }
             catch (Exception)
             {
@@ -58,7 +54,7 @@ namespace Jynx.Modules
             string result;
             try
             {
-                result = await _httpclient.GetStringAsync($"https://api.mozambiquehe.re/maprotation?auth={_configuration.ApiTrackerKey}");
+                result = await Httpclient.GetStringAsync($"https://api.mozambiquehe.re/maprotation?auth={Configuration.ApiTrackerKey}");
             }
             catch (Exception)
             {

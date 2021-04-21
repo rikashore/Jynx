@@ -2,12 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using Jynx.Dungeons;
-using Jynx.Dungeons.Types;
 using Jynx.Dungeons.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Jynx.Common;
 using Jynx.Common.Attributes;

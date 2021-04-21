@@ -1,9 +1,5 @@
 ﻿using Jynx.Dungeons.Types;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Jynx.Dungeons.Utilities
 {
@@ -16,7 +12,7 @@ namespace Jynx.Dungeons.Utilities
 
         public static readonly string[] Enemies = { "skeleton", "zombie", "assassin", "warrior" };
 
-        public static readonly Dictionary<string, DungeonEnemy> DungeonEnemies = new()
+        public static readonly Dictionary<string, DungeonEnemy> DungeonEnemies = new Dictionary<string, DungeonEnemy>()
         {
             {
                 "skeleton", new DungeonEnemy
@@ -108,7 +104,7 @@ namespace Jynx.Dungeons.Utilities
             }
         };
 
-        public static readonly List<string> RoomDescriptions = new()
+        public static readonly List<string> RoomDescriptions = new List<string>
         {
             "A cave room with spires from the ceiling",
             "A dark room with cobwebs",

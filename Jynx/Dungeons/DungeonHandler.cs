@@ -1,12 +1,8 @@
 ﻿using DSharpPlus.CommandsNext;
-using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
 using Jynx.Common;
 using Jynx.Dungeons.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Jynx.Database.Helpers;
 
@@ -42,7 +38,7 @@ namespace Jynx.Dungeons
 
                 while(enemyHealth > 0)
                 {
-                    var msg = await ctx.Channel.SendMessageAsync($"**Your HP:** {playerHealth}\n**Enemy's HP:** {enemyHealth}\nWhat would you like to do?\n> 1. Attack\n> 2. Heal\n> 3. Run!");
+                    await ctx.Channel.SendMessageAsync($"**Your HP:** {playerHealth}\n**Enemy's HP:** {enemyHealth}\nWhat would you like to do?\n> 1. Attack\n> 2. Heal\n> 3. Run!");
 
                     var input = await interactivity.WaitForMessageAsync(x => x.ChannelId == ctx.Channel.Id && x.Author.Id == ctx.Member.Id);
                     var choice = input.Result.Content.ToLower();

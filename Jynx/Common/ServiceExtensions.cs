@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Reflection;
 using Jynx.Common.Attributes;
-using Jynx.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Jynx.Common

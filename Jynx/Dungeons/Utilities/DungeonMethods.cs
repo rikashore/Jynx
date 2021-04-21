@@ -1,15 +1,10 @@
-﻿using Jynx.Dungeons.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Jynx.Dungeons.Utilities
 {
     public static class DungeonMethods
     {
-        private static readonly Random Rand = new();
+        private static readonly Random Rand = new Random();
 
         public static (string, string) GetEnemyDetails(string descriptionFor)
         {

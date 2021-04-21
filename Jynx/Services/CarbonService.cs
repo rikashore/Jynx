@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using DSharpPlus.Entities;
 using Jynx.Common;
 using Jynx.Common.Attributes;
-using Microsoft.Extensions.Logging;
 
 namespace Jynx.Services
 {

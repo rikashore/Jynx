@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Jynx.Common
+﻿namespace Jynx.Common
 {
     public static class Formatter
     {
