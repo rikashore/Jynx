@@ -8,6 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Jynx.Common.Attributes;
 using Jynx.Services;
+using Extensions = Emzi0767.Extensions;
 
 namespace Jynx.Modules
 {
@@ -27,10 +28,13 @@ namespace Jynx.Modules
                 return;
             }
 
-            var cs = await code.ParseCodeBlock(ctx);
-
-            if (cs == null)
+            if (!JynxExtensions.TryParseCodeBlock(code, out code))
+            {
+                await ctx.RespondAsync("You need to wrap the code in a code block");
                 return;
+            }
+
+            var cs = code.ParseCodeBlock();
 
             cs = cs.Remove(cs.LastIndexOf("\n", StringComparison.OrdinalIgnoreCase));
             var csUrl = WebUtility.UrlEncode(cs);

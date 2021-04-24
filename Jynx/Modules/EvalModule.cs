@@ -17,10 +17,13 @@ namespace Jynx.Modules
         [Usage("jxeval lua [code block for execution]")]
         public async Task EvalLua(CommandContext ctx, [RemainingText] string code)
         {
-            var cs = await code.ParseCodeBlock(ctx);
-
-            if (cs == null)
+            if (!JynxExtensions.TryParseCodeBlock(code, out code))
+            {
+                await ctx.RespondAsync("You need to wrap the code in a code block");
                 return;
+            }
+            
+            var cs = code.ParseCodeBlock();
 
             try
             {
