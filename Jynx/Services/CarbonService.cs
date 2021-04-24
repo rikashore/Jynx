@@ -43,7 +43,7 @@ namespace Jynx.Services
             {"zenburn", "dark" }
         };
 
-        public static string[] GetDarkThemes()
+        public string[] GetDarkThemes()
         {
             var darkThemes = ThemeDict.Where(x => x.Value == "dark").Select(x => x.Key).ToArray();
             return darkThemes;
