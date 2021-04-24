@@ -1,4 +1,4 @@
-﻿namespace Jynx.Handlers.Deserialized
+﻿namespace Jynx.Common.Deserialized
 {
     public class Current
     {

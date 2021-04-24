@@ -2,7 +2,7 @@
 using DSharpPlus.Entities;
 using Jynx.Common;
 using Jynx.Common.Attributes;
-using Jynx.Handlers.Deserialized;
+using Jynx.Common.Deserialized;
 using Newtonsoft.Json;
 
 namespace Jynx.Services
