@@ -33,7 +33,7 @@ namespace Jynx
             Console.ForegroundColor = default;
         }
 
-        static void Main(string[] args)
+        static void Main()
         {
             var jynx = new Jynx();
             WriteJynxInfo();
@@ -137,7 +137,7 @@ namespace Jynx
 
         private async Task OnError(CommandsNextExtension sender, CommandErrorEventArgs e)
         {
-            e.Context.Client.Logger.LogError(BotEventId, $"{e.Context.User.Username} tried executing '{e.Command?.QualifiedName ?? "<unknown command>"}' but it errored: {e.Exception.GetType()}: {e.Exception.Message ?? "<no message>"}", DateTime.Now);
+            e.Context.Client.Logger.LogError(BotEventId, $"{e.Context.User.Username} tried executing '{e.Command?.QualifiedName ?? "<unknown command>"}' but it errored: {e.Exception.GetType()}: {e.Exception.Message}", DateTime.Now);
             
             var failedChecks = ((ChecksFailedException) e.Exception).FailedChecks;
             foreach (var failedCheck in failedChecks)
