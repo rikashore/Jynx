@@ -46,5 +46,23 @@ namespace Jynx.Modules
 
             await ctx.RespondAsync(infoEmbed);
         }
+
+        [Command("serverinfo")]
+        [Description("Get some info about your server")]
+        [Usage("jxserverinfo")]
+        public async Task ServerInfo(CommandContext ctx)
+        {
+            var serverEmbed = new DiscordEmbedBuilder()
+                .WithTitle(ctx.Guild.Name)
+                .WithColor(JynxCosmetics.JynxColor)
+                .WithThumbnail(ctx.Guild.IconUrl)
+                .AddField("Server owner", ctx.Guild.Owner.Username)
+                .AddField("Users", $"{ctx.Guild.Members.Values.Count(x => x.IsBot != true)}")
+                .AddField("Bots", $"{ctx.Guild.Members.Values.Count(x => x.IsBot)}")
+                .AddField("Created at", $"{ctx.Guild.CreationTimestamp}")
+                .Build();
+
+            await ctx.RespondAsync(serverEmbed);
+        }
     }
 }
