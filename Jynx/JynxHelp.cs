@@ -5,6 +5,7 @@ using DSharpPlus.Entities;
 using Jynx.Common;
 using System.Collections.Generic;
 using System.Linq;
+using DSharpPlus;
 using Jynx.Common.Attributes;
 
 namespace Jynx
