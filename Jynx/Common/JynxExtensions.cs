@@ -6,29 +6,34 @@ using System.Threading.Tasks;
 
 namespace Jynx.Common
 {
-    public static class Extensions
+    public static class JynxExtensions
     {
-        public static async Task<string> ParseCodeBlock(this string s, CommandContext ctx)
+        public static string ParseCodeBlock(this string s)
         {
-            if (s == null)
-            {
-                await ctx.Channel.SendMessageAsync("You need to give a code block");
-                return null;
-            }
+            var cs1 = s.IndexOf($"```", StringComparison.OrdinalIgnoreCase);
+            cs1 = s.IndexOf('\n', cs1) + 1;
+            var cs2 = s.LastIndexOf("```", StringComparison.OrdinalIgnoreCase);
+            var cs = s.Substring(cs1, cs2 - cs1);
+
+            return cs;
+        }
+
+        public static bool TryParseCodeBlock(string s, out string code)
+        {
+            code = null;
             
             var cs1 = s.IndexOf($"```", StringComparison.OrdinalIgnoreCase);
+            if (cs1 == -1)
+                return false;
+            
             cs1 = s.IndexOf('\n', cs1) + 1;
             var cs2 = s.LastIndexOf("```", StringComparison.OrdinalIgnoreCase);
 
             if (cs1 == -1 || cs2 == -1)
-            {
-                await ctx.Channel.SendMessageAsync("You need to wrap the code into a code block.");
-                return null;
-            }
+                return false;
 
-            var cs = s.Substring(cs1, cs2 - cs1);
-
-            return cs;
+            code = s.Substring(cs1, cs2 - cs1);
+            return true;
         }
 
         public static string ToFirstUpper(this string input) =>
