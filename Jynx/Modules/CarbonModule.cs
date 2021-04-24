@@ -54,8 +54,8 @@ namespace Jynx.Modules
             var themesEmbed = new DiscordEmbedBuilder()
                 .WithTitle("Available themes")
                 .WithDescription("You can use these themes with the code command")
-                .AddField("Dark themes", $"> {string.Join("\n> ", darkThemes)}")
-                .AddField("Light Themes", $"> {string.Join("\n> ", lightThemes)}")
+                .AddField("Dark themes", darkThemes.NewlineQuote())
+                .AddField("Light Themes", lightThemes.NewlineQuote())
                 .WithColor(JynxCosmetics.JynxColor)
                 .Build();
 
